@@ -24,7 +24,6 @@ namespace WindowsFormsApp1
 
         private void IniciarSesion_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(Username.Text);
         }
 
         private void Username_TextChanged(object sender, EventArgs e)

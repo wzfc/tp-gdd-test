@@ -74,7 +74,7 @@
             // 
             // logo
             // 
-            this.logo.Image = global::WindowsFormsApp1.Properties.Resources.logo1;
+            this.logo.Image = global::PagoAgil.Properties.Resources.logo;
             this.logo.Location = new System.Drawing.Point(15, 8);
             this.logo.Name = "logo";
             this.logo.Size = new System.Drawing.Size(250, 250);

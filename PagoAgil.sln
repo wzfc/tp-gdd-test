@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagoAgil", "WindowsFormsApp1\PagoAgil.csproj", "{1092CFC8-594B-4946-ABA1-E40E62CE6A4A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagoAgil", "PagoAgil\PagoAgil.csproj", "{1092CFC8-594B-4946-ABA1-E40E62CE6A4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

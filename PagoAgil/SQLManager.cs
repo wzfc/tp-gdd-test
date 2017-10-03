@@ -18,5 +18,10 @@ namespace PagoAgil
 
             return connection;
         }
+
+        public static String SchemaName()
+        {
+            return ConfigurationManager.AppSettings["SQLSchemaName"].ToString();
+        }
     }
 }

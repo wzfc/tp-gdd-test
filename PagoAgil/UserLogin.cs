@@ -24,6 +24,11 @@ namespace WindowsFormsApp1
 
         private void IniciarSesion_Click(object sender, EventArgs e)
         {
+            var ret = PagoAgil.Query.ValidateUser(Username.Text, Password.Text);
+            if (ret)
+                MessageBox.Show("Correcto.");
+            else
+                MessageBox.Show("Error.");
         }
 
         private void Username_TextChanged(object sender, EventArgs e)

@@ -10,6 +10,8 @@ namespace PagoAgil
 {
     class SQLManager
     {
+        public static String SchemaName = ConfigurationManager.AppSettings["SQLSchemaName"].ToString();
+
         public static SqlConnection SQLConnection()
         {
             var setting = ConfigurationManager.AppSettings["SQLSetting"].ToString();
@@ -19,9 +21,11 @@ namespace PagoAgil
             return connection;
         }
 
+        /*
         public static String SchemaName()
         {
             return ConfigurationManager.AppSettings["SQLSchemaName"].ToString();
         }
+        */
     }
 }

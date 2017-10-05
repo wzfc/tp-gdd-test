@@ -12,44 +12,45 @@ namespace PagoAgil
     {
         private static SqlCommand InitSqlCommand(String commandText)
         {
-            SqlCommand query = new SqlCommand();
-
-            query.Connection = PagoAgil.SQLManager.SQLConnection();
-            query.CommandType = CommandType.Text;
-            query.CommandText = commandText;
-
-            return query;
+            var cmd = new SqlCommand(commandText, SQLManager.SQLConnection());
+            return cmd;
         }
 
         public static Boolean ValidateUser(String username, String password)
         {
-            /* TODO: Encriptar password */
+            String passwordHash = Cryptography.getSHA256String(password);
 
-            var queryText = new QueryText().Select("PASSWORD, CANT_INT_FALL, HABILITADO")
-                                           .From("USUARIOS")
-                                           .Where("USERNAME = \'" + username + "\'");
+            var userQuery = InitSqlCommand(
+                "SELECT PASSWORD, CANT_INT_FALL, HABILITADO " +
+                "FROM " + SQLManager.SchemaName + ".USUARIOS " +
+                "WHERE USERNAME = @USERNAME"
+            );
 
-            var userQuery = InitSqlCommand(queryText.Text);
+            userQuery.Parameters.Add("@USERNAME", SqlDbType.VarChar, 20).Value = username;
+
             var dataReader = userQuery.ExecuteReader();
 
             if (dataReader.Read()
                 && (bool)dataReader["HABILITADO"]
-                && password.Equals(dataReader["PASSWORD"]))
+                && passwordHash.Equals(dataReader["PASSWORD"]))
                 return true;
 
             if (dataReader.HasRows)
             {
                 var failedAttempts = (byte)dataReader["CANT_INT_FALL"] + 1;
+                var habilitado = failedAttempts >= 3 ? 0 : 1;
 
-                queryText = new QueryText().Update("USUARIOS")
-                                           .Append(" SET CANT_INT_FALL = " + failedAttempts);
+                var updateQuery = InitSqlCommand(
+                    "UPDATE " + SQLManager.SchemaName + ".USUARIOS " +
+                    "SET CANT_INT_FALL = @CANT_INT_FALL, HABILITADO = @HABILITADO " +
+                    "WHERE USERNAME = @USERNAME"
+                );
 
-                if (failedAttempts >= 3)
-                    queryText.Append(", HABILITADO = 0 ");
+                updateQuery.Parameters.Add("@CANT_INT_FALL", SqlDbType.TinyInt).Value = failedAttempts;
+                updateQuery.Parameters.Add("@HABILITADO", SqlDbType.Bit).Value = habilitado;
+                updateQuery.Parameters.Add("@USERNAME", SqlDbType.VarChar, 20).Value = username;
 
-                queryText.Where("USERNAME = \'" + username + "\'");
-
-                InitSqlCommand(queryText.Text).ExecuteNonQuery();
+                updateQuery.ExecuteNonQuery();
             }
 
             return false;

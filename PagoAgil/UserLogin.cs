@@ -28,7 +28,7 @@ namespace WindowsFormsApp1
             if (ret)
                 MessageBox.Show("Correcto.");
             else
-                MessageBox.Show("Error.");
+                MessageBox.Show("Error." + PagoAgil.Cryptography.getSHA256String(Password.Text));
         }
 
         private void Username_TextChanged(object sender, EventArgs e)

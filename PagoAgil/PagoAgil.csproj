@@ -65,8 +65,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cryptography.cs" />
     <Compile Include="Query.cs" />
-    <Compile Include="QueryText.cs" />
     <Compile Include="SQLManager.cs" />
     <Compile Include="UserLogin.cs">
       <SubType>Form</SubType>
